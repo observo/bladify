@@ -1,7 +1,7 @@
 <?php
     /*
     USAGE PATTERN:
-    php GetCSS.php DirectoryWhereHTMLFilesReside CodeName
+    php GetJS.php DirectoryWhereHTMLFilesReside CodeName
     */
     $Source=$argv[1];
     $Code=$argv[2];
@@ -17,17 +17,19 @@
                 $Lines = file($FilePath);
                 foreach ($Lines as $Line) {
                     $Line=trim($Line);
-                    if(strpos($Line, ".css")!==false){
-                        $Line=str_replace("link", "", $Line);
+                    $PreviousLine=$Line;
+                    if((strpos($Line, "link")!==false) && (strpos($Line, "rel")!==false) && (strpos($Line, ".css")===false) && (strpos($Line, "stylesheet")===false)){
+                        $Line=substr($Line, strpos($Line, 'href'));
                         $Line=str_replace("href", "", $Line);
-                        $Line=str_replace("rel", "", $Line);
-                        $Line=str_replace("stylesheet", "", $Line);
-                        $Line=str_replace("<", "", $Line);
                         $Line=str_replace("/>", "", $Line);                
                         $Line=str_replace("=", "", $Line);
                         $Line=str_replace("\"", "", $Line);
                         $Line=trim($Line);
+                        $Line=preg_replace("/<*>/", "", $Line);
                         echo $Line."\n";
+                        $HRef="href=\"{{ asset('".$Code."/assets/".$Line."') }}\">";
+                        $Line=preg_replace("/href=.*/", $HRef, $PreviousLine);
+                        //echo $Line."\n";
                         in_array ($Line, $Combined) || $Combined[]=$Line;
                     }        
                 }
@@ -35,9 +37,8 @@
         }
     }
     var_dump($Combined);
-    foreach($Combined as $Individual){
-        $Line="<link rel=\"stylesheet\" href=\"{{ asset('".$Code."/assets/".$Individual."') }}\">";
+    foreach($Combined as $Line){
         echo $Line."\n";
         //FILE WRITE
-        file_put_contents($Source."/css.txt", $Line."\n", FILE_APPEND);
+        file_put_contents($Source."/link.txt", $Line."\n", FILE_APPEND);
     }
