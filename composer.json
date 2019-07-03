@@ -1,0 +1,7 @@
+{
+    "name": "observo/Bladify",
+    "description": "An attempt to make Blade views from Bootstrap quickly",
+    "require": {
+        "php": "^7.2"
+    }
+}
