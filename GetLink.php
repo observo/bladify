@@ -1,7 +1,7 @@
 <?php
     /*
     USAGE PATTERN:
-    php GetJS.php DirectoryWhereHTMLFilesReside CodeName
+    php GetLink.php DirectoryWhereHTMLFilesReside CodeName
     */
     $Source=$argv[1];
     $Code=$argv[2];
