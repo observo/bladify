@@ -43,5 +43,5 @@
         $Line="<link rel=\"stylesheet\" href=\"{{ asset('".$Code."/assets/".$Individual."') }}\">";
         echo $Line."\n";
         //FILE WRITE
-        file_put_contents($Source."/css.txt", $Line."\n", FILE_APPEND);
+        file_put_contents($Source."/".$Code."/css.txt", $Line."\n", FILE_APPEND);
     }
