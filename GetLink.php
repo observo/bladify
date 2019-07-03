@@ -2,6 +2,7 @@
     /*
     USAGE PATTERN:
     php GetLink.php DirectoryWhereHTMLFilesReside CodeName
+    THE link.txt FILE WILL BE CREATED IN CodeName DIRECTORY
     */
     $Source=$argv[1];
     $Code=$argv[2];
@@ -36,9 +37,12 @@
             }
         }
     }
-    var_dump($Combined);
+    if (!file_exists($Source."/".$Code)) {
+        mkdir($Source."/".$Code, 0777, true);
+    }
+    
     foreach($Combined as $Line){
         echo $Line."\n";
         //FILE WRITE
-        file_put_contents($Source."/link.txt", $Line."\n", FILE_APPEND);
+        file_put_contents($Source."/".$Code."/link.txt", $Line."\n", FILE_APPEND);
     }

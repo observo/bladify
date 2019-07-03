@@ -2,6 +2,7 @@
     /*
     USAGE PATTERN:
     php GetJS.php DirectoryWhereHTMLFilesReside CodeName
+    THE js.txt FILE WILL BE CREATED IN CodeName DIRECTORY
     */
     $Source=$argv[1];
     $Code=$argv[2];
@@ -33,10 +34,13 @@
             }   
         }
     }
-    var_dump($Combined);
+    if (!file_exists($Source."/".$Code)) {
+        mkdir($Source."/".$Code, 0777, true);
+    }
+    
     foreach($Combined as $Individual){
         $Line="<script src=\"{{ asset('".$Code."/assets/".$Individual."') }}\"></script>";
         echo $Line."\n";
         //FILE WRITE
-        file_put_contents($Source."/js.txt", $Line."\n", FILE_APPEND);
+        file_put_contents($Source."/".$Code."/js.txt", $Line."\n", FILE_APPEND);
     }

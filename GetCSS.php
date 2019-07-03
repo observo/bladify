@@ -2,6 +2,7 @@
     /*
     USAGE PATTERN:
     php GetCSS.php DirectoryWhereHTMLFilesReside CodeName
+    THE css.txt FILE WILL BE CREATED IN CodeName DIRECTORY
     */
     $Source=$argv[1];
     $Code=$argv[2];
@@ -34,7 +35,10 @@
             }
         }
     }
-    var_dump($Combined);
+    if (!file_exists($Source."/".$Code)) {
+        mkdir($Source."/".$Code, 0777, true);
+    }
+    $Source."/".$Code
     foreach($Combined as $Individual){
         $Line="<link rel=\"stylesheet\" href=\"{{ asset('".$Code."/assets/".$Individual."') }}\">";
         echo $Line."\n";
