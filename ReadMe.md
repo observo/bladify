@@ -1,2 +1,2 @@
-We have found that making Blade templates is highly repetitive task.
+We have found that making Blade views is highly repetitive task.
 Therefore this calls for automation.
